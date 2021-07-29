@@ -1,39 +1,53 @@
 # python
 
+# Python for OHOS  
+
 #### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+这个仓库是为了能够在OpenHarmony设备上使用 Python 进行应用程序开发而创建。  
+[1. 使用Python开发OpenHarmony设备程序（0-初体验）](https://harmonyos.51cto.com/posts/1887)  
 
+
+## 以下说明针对lite-python文件夹下的代码
 #### 软件架构
-软件架构说明
+这个仓库下的 Baseline 是 [MicroPython v1.13](https://github.com/micropython/micropython/tree/v1.13)，在 MicroPython 的基础上进行了必要的剪裁以满足 OHOS 上的应用开发需求。  
 
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 编译说明
+1.  编译环境：  
+    1）OS - Ubuntu 16+  
+    2）Make - 3.81+  
+    3）Python - 3.8+  
+2.  配置交叉编译器：  
+    1）打开源码根目录中的 Makefile  
+    2）对变量 CROSS_COMPILE 进行赋值，如：CROSS_COMPILE ?= /home/harmony/gcc_riscv32/bin/riscv32-unknown-elf-  
+3.  在源码根目录中执行 make  
 
 #### 使用说明
+1.  将编译得到的库文件 //build/libdtpython.a 拷贝到 //vendor/hisi/hi3861/hi3861/build/libs 目录下，如图：
+![输入图片说明](https://images.gitee.com/uploads/images/2020/1130/102742_bea41b9a_8048968.png "82c43e952c89d664c1513719385ef6b12ba1a7.png")  
+2.  在设备应用中加载 Python 并执行代码  
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+```
+#include "dtpython.h"
 
-#### 参与贡献
+extern const char* c_test_py;      // test.py
+extern const char* c_another_py;   // another.py
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+static void DTPython_Demo_Entry(void)
+{
+    printf("[DTPython_Demo] DTPython_Demo_Entry()\n");
 
+    DTPython_Init();   // 初始化Python环境
 
-#### 特技
+    DTPython_RunCode("print(\'Python Code Begin\')");    // 执行Python语句：print('Python Code Begin')
+    
+    DTPython_RunCode("s = \'HOS Device Development\'");  // 执行Python语句：s = 'HOS Device Development'
+    DTPython_RunCode("print(s)");                        // 执行Python语句：print(s)
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+    DTPython_RunCode(c_test_py);                         // 模拟执行Python文件：DTPython_RunFile("test.py");
+    DTPython_RunCode(c_another_py);                      // 模拟执行Python文件：DTPython_RunFile("another.py");
+
+    DTPython_RunCode("print(\'Python Code End\')");      // 执行Python语句：print('Python Code End')
+
+    DTPython_Deinit(); // 清理Python环境
+}
+```
