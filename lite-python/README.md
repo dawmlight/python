@@ -1,11 +1,11 @@
-# Python for HOS  
+# Python for OHOS  
   
 #### 介绍
-这个仓库是为了能够在鸿蒙设备上使用 Python 进行应用程序开发而创建。  
-[1. 使用Python开发鸿蒙设备程序（0-初体验）](https://harmonyos.51cto.com/posts/1887)  
+这个仓库是为了能够在OpenHarmony设备上使用 Python 进行应用程序开发而创建。  
+[1. 使用Python开发OpenHarmony设备程序（0-初体验）](https://harmonyos.51cto.com/posts/1887)  
   
 #### 软件架构
-这个仓库的 Baseline 是 [MicroPython v1.13](https://github.com/micropython/micropython/tree/v1.13)，在 MicroPython 的基础上进行了必要的剪裁以满足 HOS 上的应用开发需求。  
+这个仓库的 Baseline 是 [MicroPython v1.13](https://github.com/micropython/micropython/tree/v1.13)，在 MicroPython 的基础上进行了必要的剪裁以满足 OHOS 上的应用开发需求。  
   
 #### 编译说明
 1.  编译环境：  
