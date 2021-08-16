@@ -31,7 +31,7 @@ MICROPY_ROM_TEXT_COMPRESSION ?= 1
 # include py core make definitions
 include $(TOP)/py/py.mk
 
-CROSS_COMPILE ?= /home/harmony/gcc_riscv32/bin/riscv32-unknown-elf-
+CROSS_COMPILE ?= riscv32-unknown-elf-
 
 
 INC += -I.
